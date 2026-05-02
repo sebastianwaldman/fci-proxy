@@ -9,7 +9,15 @@ exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
   try {
     const url = CAFCI_BASE + '/fondo?estado=1&limit=10000&include=gerente,tipoFondo,moneda,calificacion';
-    const r = await fetch(url, { headers: { 'Accept': 'application/json', 'User-Agent': 'Mozilla/5.0' } });
+    const r = await fetch(url, {
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept-Language': 'es-AR,es;q=0.9',
+        'Referer': 'https://www.cafci.org.ar/',
+        'Origin': 'https://www.cafci.org.ar'
+      }
+    });
     if (!r.ok) throw new Error('CAFCI respondio ' + r.status);
     const raw = await r.json();
     const fondos = raw.data || [];
